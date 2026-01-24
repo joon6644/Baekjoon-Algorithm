@@ -1,13 +1,13 @@
 import sys
 input = sys.stdin.readline
-INF = float('inf')
 
 n = int(input())
 
 array = [0]
 for _ in range(n):
     array.append(int(input()))
-if n < 2:
+
+if n < 3:
     print(sum(array))
     sys.exit()
 
