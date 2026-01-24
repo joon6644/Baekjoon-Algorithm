@@ -3,56 +3,44 @@ from collections import deque
 input = sys.stdin.readline
 INF = float('inf')
 
+# 시작 좌표를 받아서 먹이의 위치와 거리를 반환하는 함수
 def search(start):
-    flag = True
-    size = [2, 0]
-    total_time = 0
+    r, c = start[0], start[1]
+    queue = deque([start])
+    visited = {(r, c)}
+    candidates = []
+    min_dist = INF
+    space[r][c] = 0
 
-    while flag:
-        flag = False
-        queue = deque([start])
-        visited = set(start)
-        records = []
-        st_dist = INF
-        space[start[0]][start[1]] = 0
+    while queue:
+        curr_r, curr_c, dist = queue.popleft()   
 
-        while queue:
-            curr_r, curr_c, time = queue.popleft()   
-            if time >= st_dist:
+        if dist >= min_dist:
+            continue
+
+        for i in range(4):
+            next_r = curr_r + dr[i]
+            next_c = curr_c + dc[i]
+
+            if not (0 <= next_r < N and 0 <= next_c < N):
                 continue
-
-            for i in range(4):
-                next_r = curr_r + dr[i]
-                next_c = curr_c + dc[i]
-
-                if not (0 <= next_r < N and 0 <= next_c < N):
-                    continue
-                if (next_r, next_c) in visited:
-                    continue
-                if space[next_r][next_c] > size[0]:
-                    continue
-                
-                if space[next_r][next_c] > 0 and space[next_r][next_c] < size[0]:
-                    flag = True
-                    records.append((next_r, next_c))
-                    st_dist = time + 1
-
-                visited.add((next_r, next_c))
-                queue.append((next_r, next_c, time + 1))
-        
-        if flag:
-            records.sort()
-            r, c = records[0]
+            if (next_r, next_c) in visited:
+                continue
+            if space[next_r][next_c] > shark_size:
+                continue
             
-            total_time += st_dist
-            start = (r, c, 0)
+            if space[next_r][next_c] > 0 and space[next_r][next_c] < shark_size:
+                min_dist = dist + 1
+                candidates.append((next_r, next_c, min_dist))
 
-            size[1] += 1
-            if size[1] == size[0]:
-                size[0] += 1
-                size[1] = 0 
-
-    return total_time
+            visited.add((next_r, next_c))
+            queue.append((next_r, next_c, dist + 1))
+        
+    if candidates:
+        candidates.sort()
+        return candidates[0]
+    else:
+        return None
             
 N = int(input())
 
@@ -72,6 +60,23 @@ for r in range(N):
 dr = [-1, 0, 1, 0]
 dc = [0, -1, 0, 1]
 
-ans = search(start)
+shark_size = 2
+eat_count = 0
+total_time = 0
 
-print(ans)
+while True:
+    result = search(start)
+    
+    if result is None: break
+        
+    r, c, time = result
+    
+    total_time += time
+    start = (r, c, 0)
+
+    eat_count += 1
+    if eat_count == shark_size:
+        shark_size += 1
+        eat_count = 0
+
+print(total_time)
