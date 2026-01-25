@@ -19,7 +19,7 @@ for cur, par in enumerate(parent):
 if root == -99:
     print(0)
     sys.exit()
-    
+
 stack = [root]
 cnt = 0
 while stack:
@@ -28,7 +28,7 @@ while stack:
         cnt += 1
         continue
 
-    for next in childs[curr]:
-        stack.append(next)
+    for nxt in childs[curr]:
+        stack.append(nxt)
 
 print(cnt)
