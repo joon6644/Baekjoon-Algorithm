@@ -8,14 +8,10 @@ dice = list(map(int, input().split()))
 if N == 1:
     print(sum(sorted(dice)[:5]))
     sys.exit()
-elif N == 2:
-    f = 0
-    e = 4
-    v = 4
-else:
-    f = 5 * N**2 - 16 * N + 12
-    e = 8 * N - 12  
-    v = 4
+
+f = 5 * N**2 - 16 * N + 12
+e = 8 * N - 12  
+v = 4
 
 nums = []
 for i in range(3):
