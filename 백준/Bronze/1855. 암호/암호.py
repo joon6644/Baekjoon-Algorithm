@@ -9,11 +9,7 @@ for i in range(K, len(S), 2 * K):
     S[i:i+K] = S[i:i+K][::-1]
     
 ans = []
-
-i = 0
-while i != K:
-    for j in range(i, len(S), K):
-        ans.append(S[j])
-    i += 1
+for i in range(K):
+    ans.extend(S[i::K])
 
 print(''.join(ans))
