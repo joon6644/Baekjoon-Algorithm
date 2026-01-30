@@ -2,22 +2,15 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
-
         String input = scanner.next();
 
-        int endIndex = 0;
-        int startIndex = 0;
+        for (int i = 0; i < input.length(); i += 10) {
+            int endIndex = Math.min(i + 10, input.length());
 
-        for (int i = 0; i <= input.length() / 10; i++) {
-            startIndex = i * 10;
-            if (startIndex + 10 > input.length()) {
-                endIndex = input.length();
-            } else {
-                endIndex = startIndex + 10;
-            }
-            System.out.println(input.substring(startIndex, endIndex));
+            System.out.println(input.substring(i, endIndex));
         } 
+        
+        scanner.close();
     }
 }
