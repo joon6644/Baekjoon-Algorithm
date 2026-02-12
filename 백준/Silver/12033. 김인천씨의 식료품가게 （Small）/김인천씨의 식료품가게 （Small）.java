@@ -14,7 +14,7 @@ public class Main {
             long[] arr = new long[2 * N];
 
             for (int j = 0; j < 2 * N; j++) {
-                arr[j] = sc.nextInt();
+                arr[j] = sc.nextLong();
             }
 
             Arrays.sort(arr);
